@@ -1,0 +1,46 @@
+/* CSS/CssStyles.css */
+
+/* Style for the custom dropdown */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px; /* Add margin as needed to separate items */
+  }
+  
+  .custom-dropdown a {
+    text-decoration: none; /* Remove underline from links */
+    color: darkblue; /* Text color for the link */
+    padding: 10px;
+    display: block;
+    position: relative; /* Add this */
+  }
+  
+  .custom-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: transparent; /* Background color of the dropdown */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%; /* Position the dropdown below the link */
+    left: 0; /* Position the dropdown to the left of the link */
+  }
+  
+  .custom-dropdown:hover .custom-dropdown-content {
+    display: block; /* Show the dropdown when the parent is hovered */
+  }
+  
+  .custom-dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: darkblue; /* Text color for the dropdown items */
+    font-size: 18px; /* Font size for the dropdown items */
+
+  }
+  
+  .custom-dropdown-content a:hover {
+    background-color: #ddd; /* Background color on hover */
+    color: darkblue; /* Text color on hover */
+  }
+  

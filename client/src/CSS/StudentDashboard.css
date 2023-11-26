@@ -1,0 +1,10 @@
+.backgroundImageStyle {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: royalblue;
+    font-family: 'Roboto', sans-serif;
+    padding: 50px;
+    text-align: center;
+}
+

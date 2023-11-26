@@ -1,0 +1,47 @@
+.custom-bg-gray {
+  background-color: rgb(228, 236, 242); /* You can adjust the color as needed */
+}
+/* Add this to your custom CSS file */
+.fw-extrabold {
+  font-weight: 900; /* Extrabold font weight */
+}
+.text-green {
+  color: rgb(5, 194, 5);
+}
+.btn-color {
+  color: orange;
+}
+.custom-hr {
+  border-top: 2px solid darkblue;
+}
+.fade-in {
+  opacity: 0;
+  animation: fade-in-animation 2s ease forwards;
+}
+
+@keyframes fade-in-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* Optional: Add a slight vertical movement */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rotating-text {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.darkblue {
+  background-color: darkblue;
+}

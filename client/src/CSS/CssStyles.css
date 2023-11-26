@@ -1,0 +1,130 @@
+
+.page{
+    background-image: url('https://bowvalleycollege.ca/-/media/bvc/stories-and-news/2022/campus_1.ashx');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Fixed background position */
+    background-position: center; /* Center the image */
+  }
+.page-home {
+    background-image: url('https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Fixed background position */
+    background-position: center; /* Center the image */
+  }
+.page-register {
+    background-image: url('https://images.pexels.com/photos/7973205/pexels-photo-7973205.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Fixed background position */
+    background-position: center; /* Center the image */
+  }
+.page-programs {
+    background-image: url('https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Fixed background position */
+    background-position: center; /* Center the image */
+  }
+.page-re {
+    background-image: url('https://images.pexels.com/photos/39389/keyboard-key-success-online-39389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Fixed background position */
+    background-position: center; /* Center the image */
+  }
+  .bold-white{
+    font-weight: bold;
+    color: darkblue;
+    transition: color 0.3s, border-bottom 0.3s; /* Add smooth transition for color and underline */
+    position: relative; /* Position relative for the pseudo-element */
+  }
+  .bold-white:hover {
+    color: #007bff; /* Change the text color on hover */
+    border-bottom: 2px solid #007bff; /* Add an underline on hover */
+  }
+  
+  .bold-white:after {
+    content: "";
+    position: absolute;
+    bottom: -2px; /* Position the underline below the text */
+    left: 0;
+    right: 0;
+    border-bottom: 2px solid transparent; /* Initially, make it transparent */
+    transition: border-bottom 0.3s; /* Add transition for the underline */
+  }
+  
+  .bold-white:hover:after {
+    border-bottom: 2px solid #007bff; /* Show the underline on hover */
+  }
+  .btn-color{
+    color: darkblue;
+  }
+ 
+
+.registration-form a:hover {
+    text-decoration: none;
+    color: #0056b3; /* Link color on hover */
+}
+
+/* CssStyles.css */
+/* Styles for Reviews Section */
+.reviews-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.review-card {
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for News Section */
+.news-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.news-article {
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.news-article h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.news-article p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* CssStyles.css */
+.page-home {
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.reviews-section,
+.news-section {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
