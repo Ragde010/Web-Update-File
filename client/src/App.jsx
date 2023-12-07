@@ -23,6 +23,9 @@ import ForgotPassword from "./ForgotPassword";
 import Register from "./Register";
 import StudentAddCourse from "./StudentDashboard/StudentAddCourse";
 import StudentDashboard from "./StudentDashboard/StudentDashboard";
+import ProtectedRouter from "./ProtectedRouter";
+import Messages from "./StudentDashboard/Messages";
+import ExchangeCourse from "./StudentDashboard/ExchangeCourse";
 
 function App() {
   return (
@@ -32,6 +35,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="/register" element={<Signup />}></Route>
+        <Route path="/messages" element={<Messages />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/newlogin" element={<NewLogin />}></Route>
         <Route path="/newsignup" element={<NewSignup />}></Route>
@@ -49,7 +53,8 @@ function App() {
         <Route path="/newprogram" element={<NewPrograms />} />
         <Route path="/newregistration" element={<Register />} />
         <Route path="/newaddcourse" element={<StudentAddCourse />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/exchangecourse" element={<ExchangeCourse />} />
+        <Route path="/student-dashboard" element={<ProtectedRouter><StudentDashboard /></ProtectedRouter>} />
         <Route path="/home" element={<Home />}></Route>
       </Routes>
       </UserAuthContextProvider>

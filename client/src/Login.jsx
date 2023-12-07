@@ -48,7 +48,7 @@ function Login() {
                 className="form-control rounded-0"
                 onChange={(e) => setUsername(e.target.value)}
               />
-              {/* {emailError && <span className='text-danger'>{emailError}</span>} */}
+              {emailError && <span className='text-danger'>{emailError}</span>}
             </div>
             <div className="mb-3">
               <label htmlFor="password">

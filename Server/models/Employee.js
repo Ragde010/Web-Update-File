@@ -4,8 +4,9 @@ const EmployeeSchema = new mongoose.Schema({
     employeeId: String,
     name: String,
     email: String,
+    dateOfBirth: String,
     password: String,
-    username: String,
+    confirmPassword:String,
 })
 
 // For creating a new Table "StudentInfo" to the database and store the data

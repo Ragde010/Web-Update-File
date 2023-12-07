@@ -5,6 +5,7 @@ import navLogo from "./assets/images/BCR2.png";
 import "./CSS/CssStyles.css";
 import "./CSS/CustomDropdown.css";
 
+
 const Navigation = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -16,7 +17,7 @@ const Navigation = () => {
       <div className="background">
         <Navbar
           collapseOnSelect
-          fixed="top"
+
           expand="lg"
           bg="light"
           variant="dark"

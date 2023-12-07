@@ -23,17 +23,22 @@ function Adminpage() {
   }
   return (
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center '>
-      <div className='w-75 bg-white rounded p-3'>
-        <Link to="/create-course" className='btn btn-success btn-with-padding'> <strong>+</strong> Add Course</Link>
-        <Link to="/viewstudentList" className='btn btn-warning btn-with-padding'> Student List</Link>
-        <Link to= "/" className='btn btn-primary btn-with-padding'>View Student Form</Link>
+      <div className='w-100 h-100 bg-white rounded p-3'>
+        <Link to="/create-course" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> <strong>+</strong> Add Course</Link>
+        <Link to="/viewstudentList" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> Student List</Link>
           <table className='table'>
             <thead>
               <tr>
-                <th>Course Code</th>
-                <th>Course Name</th>
-                <th>Course Start</th>
-                <th>Course End</th>
+                <th>CourseCode</th>
+                <th>CourseName</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>DropDate</th>
+                <th>WithdrawalDate</th>
+                <th>Instructor</th>
+                <th>Campus</th>
+                <th>Credits</th>
+                <th>DeliveryMode</th>
                 <th>Fees</th>
                 <th>Description</th>
                 <th>Action</th>
@@ -42,16 +47,22 @@ function Adminpage() {
             <tbody>
               {
                 courses.map((course) => {
-                  return <tr>
+                  return <tr key= {course._id}>
                     <td className='text-bold'>{course.courseCode}</td>
                     <td>{course.courseName}</td>
                     <td>{course.courseStart}</td>
                     <td>{course.courseEnds}</td>
+                    <td>{course.dropCourse}</td>
+                    <td>{course.withdrawal}</td>
+                    <td>{course.instructor}</td>
+                    <td>{course.campus}</td>
+                    <td>{course.credits}</td>
+                    <td>{course.deliveryMode}</td>
                     <td className='text-bold'>{course.fees}</td>
                     <td>{course.description}</td>
                     <td>
-                      <Link to={`/update-course/${course._id}`} className='btn btn-primary'>Update</Link>
-                      <button className= 'btn btn-danger' onClick={(e) => handleDelete(course._id)}>Delete</button>
+                      <Link to={`/update-course/${course._id}`} className='btn btn-primary'style={{ backgroundColor: 'darkblue' }}>Update</Link>
+                      <button className= 'btn btn-primary' style={{ backgroundColor: 'darkblue' }}onClick={(e) => handleDelete(course._id)}>Delete</button>
                     </td>
                   </tr>
                 })

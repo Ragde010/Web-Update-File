@@ -1,89 +1,90 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, {useEffect, useState} from 'react'
 import { Modal, Button} from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
-function ViewCourse() {
-  const [courseData, setCourseData] = useState([]);
-  const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [selectedCourseDetails, setSelectedCourseDetails] = useState({});
-  const navigate = useNavigate();
-  
-    
+function NewAddCourse() {
+    const [courseData, setCourseData] = useState([]);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
+    const [selectedCourseDetails, setSelectedCourseDetails] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
+
     useEffect(() => {
-    // Fetch student course data
-    axios.get('http://localhost:3001/get-student-course-data')
-      .then(response => {
-        setCourseData(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+        // Fetch course data from the database
+        axios.get('http://localhost:3001/get-course-data')
+          .then(response => {
+            setCourseData(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching course data:', error);
+          });
+      }, []);
 
-  }, []);
-    const handleOpenDetailsModal = (course) => {
-      setSelectedCourseDetails(course);
-      setShowDetailsModal(true);
-    };
+      const handleRegistration = (selectedCourse) => {
+        const combinedCourseData = {
+            _id: selectedCourse._id,  // this line to include the _id
+            courseCode: selectedCourse.courseCode,
+            courseName: selectedCourse.courseName,
+            courseStart: selectedCourse.courseStart,
+            courseEnds: selectedCourse.courseEnds,
+            credits: selectedCourse.credits,
+            deliveryMode: selectedCourse.deliveryMode,
+            campus: selectedCourse.campus,
+            description: selectedCourseDetails.description,
+            dropCourse: selectedCourseDetails.dropCourse,
+            withdrawal: selectedCourseDetails.withdrawal,
+            instructor: selectedCourseDetails.instructor,
+            fees: selectedCourse.fees,  
+          };
+        //   console.log('Deleting course with ID:', combinedCourseData._id)
+        axios.post('http://localhost:3001/register-course', { combinedCourseData })
+          .then(response => {
+            // Handle success response if needed
+            console.log('Course registered successfully:', response.data);
+                // Update the local state to remove the registered course
+            const updatedCourseData = courseData.filter(course => course._id !== selectedCourse._id);
+            setCourseData(updatedCourseData);
+          })
+          .catch(error => {
+            // Handle errors if the request fails
+            console.error('Error registering course:', error);
+          });
+      };
 
-    const handleCloseDetailsModal = () => {
-      setShowDetailsModal(false);
-    };
-
-    const handleDrop = (selectedCourse) => {
-      // Perform API call to delete the course on the server side
-      axios.delete(`http://localhost:3001/delete-course/${selectedCourse._id}`)
-        .then(response => {
-          // After successful deletion on the server, update the local state to remove the course from the UI
-          const updatedCourseData = courseData.filter(course => course._id !== selectedCourse._id);
-          setCourseData(updatedCourseData);
-        })
-        .catch(error => {
-          // Handle errors if the request fails
-          console.error('Error deleting course:', error);
-        });
-    };
-    const handleExchange = (selectedCourse) => {
-      const combinedCourseData = {
-        courseCode: selectedCourse.courseCode,
-        courseName: selectedCourse.courseName,
-        courseStart: selectedCourse.courseStart,
-        courseEnds: selectedCourse.courseEnds,
-        credits: selectedCourse.credits,
-        deliveryMode: selectedCourse.deliveryMode,
-        campus: selectedCourse.campus,
-        description: selectedCourseDetails.description,
-        dropCourse: selectedCourseDetails.dropCourse,
-        withdrawal: selectedCourseDetails.withdrawal,
-        instructor: selectedCourseDetails.instructor,
-        fees: selectedCourse.fees, 
+      const handleOpenDetailsModal = (course) => {
+        setSelectedCourseDetails(course);
+        setShowDetailsModal(true);
       };
     
-    axios.post('http://localhost:3001/remove-course', { combinedCourseData })
-      .then(response => {
-        // Handle success response if needed
-        console.log('Course registered successfully:', response.data);
-            // Update the local state to remove the registered course
-        const updatedCourseData = courseData.filter(course => course._id !== selectedCourse._id);
-        setCourseData(updatedCourseData);
-        navigate('/exchangecourse')
-      })
-      .catch(error => {
-        // Handle errors if the request fails
-        console.error('Error registering course:', error);
-      });
-  };
-    
+      const handleCloseDetailsModal = () => {
+        setShowDetailsModal(false);
+      };
+      // Filter courses based on search query
+    const filteredCourses = courseData.filter(course => {
+        const searchString = searchQuery.toLowerCase();
+        return (
+        course.courseName.toLowerCase().includes(searchString) ||
+        course.courseCode.toLowerCase().includes(searchString) ||
+        course.campus.toLowerCase().includes(searchString)
+        
+        );
+    });
 
-  
-
+      
   return (
     <div className=" border-3 shadow-lg"style={{ maxWidth: '100%', maxHeight: '600px', overflowY: 'auto' }}>
     <div className='card p-4 shadow position-relative'>
-      <h2 className='text-center mb-4'style={{ color: 'darkblue', fontWeight: 600 }}>Registered Courses</h2>
+      <h2 className='text-center mb-4'style={{ color: 'darkblue', fontWeight: 600 }}>Available Courses</h2>
+      <input
+          type="text"
+          placeholder="Search courses..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="mb-3 border-1 shawdow-md rounded "
+          style={{ padding: '5px' }}
+        />
       <div className='row w-100'>
-        {courseData.map((course, index) => (
+        {filteredCourses.map((course, index) => (
           <div key={index} className='mb-3'>
             <div className='card h-100 w-100 position-relative shadow-lg'style={{ paddingLeft: '20px' }}>
               <div className='card-body'>
@@ -97,15 +98,14 @@ function ViewCourse() {
                 <p className='card-text'style={{ margin: 0, marginLeft: '10px' }}><span className='text-bold'>Delivery Mode:</span> {course.deliveryMode}</p>
                 <p className='card-text'style={{ margin: 0, marginLeft: '10px' }}><span className='text-bold'>Fees:</span> {course.fees}</p>
                 <div className='d-flex justify-content-center'>
-                  <button className='btn btn-primary border-dark ' style={{ backgroundColor: 'darkblue' }} onClick={() => handleDrop(course)}>Drop</button>
-                  <button className='btn btn-primary border-dark ' style={{ backgroundColor: 'darkblue' }} onClick={() => handleExchange(course)}>Exchange</button>
-                </div>  
+                  <button className='btn btn-primary border-dark ' style={{ backgroundColor: 'darkblue' }}  onClick={() => handleRegistration(course)}>Register</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
 
         {/* Course Details Modal */}
         <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
@@ -123,7 +123,7 @@ function ViewCourse() {
             <p style={{ margin: 0, marginLeft: '5px' }}><span className='text-bold'>Campus:</span> {selectedCourseDetails.campus}</p>
             <p style={{ margin: 0, marginLeft: '5px' }}><span className='text-bold'>Delivery Mode:</span> {selectedCourseDetails.deliveryMode}</p>
             <p style={{ margin: 0, marginLeft: '5px' }}><span className='text-bold'>Instructor:</span> {selectedCourseDetails.instructor}</p>
-           
+            {/* Add more details as needed */}
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseDetailsModal}>
@@ -132,7 +132,8 @@ function ViewCourse() {
         </Modal.Footer>
         </Modal>
         </div>
+
   )
 }
 
-export default ViewCourse
+export default NewAddCourse

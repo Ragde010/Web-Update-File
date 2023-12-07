@@ -1,5 +1,6 @@
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from './Navigation';
+import Footer from './components/Footer';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import './CSS/Programs.css'
@@ -7,16 +8,17 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 function Home() {
+  const currentYear = new Date().getFullYear();
   const words = [<span style={{ color: 'white', fontFamily: 'sans-serif' }}>Succeeding</span>,
-                <span style={{ color: 'lightblue', fontFamily: 'sans-serif' }}>Winning</span>,
-                <span style={{ color: 'white', fontFamily: 'sans-serif' }}>Earning</span>,
-                <span style={{ color: 'lightblue', fontFamily: 'sans-serif' }}>Contributing</span>,];
+  <span style={{ color: 'lightblue', fontFamily: 'sans-serif' }}>Winning</span>,
+  <span style={{ color: 'white', fontFamily: 'sans-serif' }}>Earning</span>,
+  <span style={{ color: 'lightblue', fontFamily: 'sans-serif' }}>Contributing</span>,];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex === words.length - 1 ? 0 : prevIndex + 1));
-    }, 2000); 
+    }, 2000);
     return () => {
       clearInterval(interval);
     };
@@ -24,55 +26,40 @@ function Home() {
   
   
   return (
-    <div className="d-flex flex-column">
-    <Navigation />
-      <div className='vh-100 d-flex flex-column flex-grow-1 justify-content-end p-3'  style={{ backgroundImage: "url('https://bowvalleycollege.ca/-/media/bvc/home/hero-banners/hero.ashx')", backgroundRepeat: 'no-repeat', backgroundSize: 'contain', backgroundPosition: 'center center'}}>
+    <>
+      <Navigation className='d-block sticky-top' />
 
-    <div className="darkblue text-white p-3 text-center " 
-        style={{
-        width: '100%', 
-        left:0, 
-        right: 0, 
-        top: '10px',
-        height: '20%'
-        }}>
-      <Container>
-        <Row>
-          <Col className='sm-3'>
-            <h2 className='text-bold'>Your journey starts at our open house</h2>
-            <h5>The next Open House event is March 9th, 2024 | 10 a.m. to 2 p.m.</h5>
-          </Col>
-            <Col className='sm-3'>
-            <Button className='btn btn-danger btn-lg w-50'>Open House</Button>
-          </Col>
-        </Row>
-      </Container>
+      <div id='Main' className='d-block'>
+
+        <div className='position-relative' style={{ height: '120px', backgroundColor: 'darkblue' }}>
+          <div className='d-block align-items-center'>
+            <div className='d-inline mx-5 px-5 text-white'>
+              <h1 className='d-inline' style={{ fontSize: '70px', fontWeight: 'bold', }}> Hit the ground </h1>
+              <h1 style={{ fontSize: '90px', fontWeight: 'bold', }} className="d-inline fade-in">{words[currentWordIndex]}</h1>
+            </div>
+          </div>
         </div>
-       
-        <div
-          className="darkblue text-white p-3 text-center"
-          style={{
-            position: 'absolute',
-            top: '15%', 
-            left: 0,
-            right: 0,
-            width: '100%',
-          }}
-        >
-            <Container>
-              <Row >
-          
-                <Col className='sm-3'>
-                <h1 style={{ fontSize: '90px'}}> Hit the ground</h1></Col>
-                
-                <Col className='sm-3'>
-                <h1 style={{fontSize: '110px'}}className="fade-in">{words[currentWordIndex]}</h1>
-                </Col>
-              </Row>
-            </Container>
+
+        <div className='d-flex flex-column h-100'>
+          <img src="https://bowvalleycollege.ca/-/media/bvc/home/hero-banners/hero.ashx" />
+          <div className='w-100 py-5'>
+            <div className='d-flex flex-row w-100 justify-content-around'>
+              <div className='d-flex flex-column'>
+                <h2 className='text-bold' >Your journey starts at our open house</h2>
+                <h5>The next Open House event is March 9th, 2024 | 10 a.m. to 2 p.m.</h5>
+              </div>
+              <Button className='btn btn-danger btn-lg w-10'>Open House</Button>
+            </div>
+          </div>
+
         </div>
-        </div>
-    </div>
+
+
+
+      </div >
+      <Footer currentYear={currentYear} />
+    </>
+
   );
 }
 

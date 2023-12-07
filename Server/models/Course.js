@@ -5,6 +5,12 @@ const CourseSchema = new mongoose.Schema({
     courseName: String,
     courseStart: String,
     courseEnds: String,
+    dropCourse: String,
+    withdrawal: String,
+    instructor: String,
+    credits: String,
+    deliveryMode: String,
+    campus: String,
     fees: String,
     description: String
 })

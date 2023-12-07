@@ -27,14 +27,6 @@ function StudentAddCourse() {
       });
     }, []);
 
-    // useEffect(() => {
-    //   // Update courseOptions based on selected courses
-    //   const updatedCourseOptions = courseOptions.filter((option) => {
-    //     const selectedCourses = Object.values(formData).filter(Boolean);
-    //     return !selectedCourses.includes(option.courseCode && option.courseName);
-    //   });
-    //   setCourseOptions(updatedCourseOptions);
-    // }, [formData, courseOptions]);
 
     const handleDurationChange = (event) => {
         const duration = event.target.value;
@@ -65,6 +57,22 @@ function StudentAddCourse() {
         .catch((error) => console.log(error))
         // console.log('Submitted data:', { selectedDuration, formData });
     };
+    const handleCourseClick = (courseCode, courseName, index) => {
+      // Update the form data with the selected course
+      setFormData({ ...formData, [`Course${index}`]: `${courseCode} - ${courseName}` });
+  
+      // Update the course options by removing the selected course
+      const updatedCourseOptions = courseOptions.filter((option) => option.courseCode !== courseCode);
+      setCourseOptions(updatedCourseOptions);
+  
+      // Send a request to update the database with the selected course
+      axios.post('http://localhost:3001/update-course', { userId: user.id, courseCode, courseName })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => console.error(error));
+    };
+  
 
 
     const getMaxCourses = (duration) => {
@@ -90,7 +98,7 @@ function StudentAddCourse() {
     <form onSubmit={handleFormSubmit}>
     <div className='mb-1'>
             <label className='mb-2' htmlFor=''>
-              <strong>First Name</strong>
+              <strong>Full Name</strong>
             </label>
             <input
               type='text'
@@ -154,7 +162,9 @@ function StudentAddCourse() {
               >
                 <option value="">Select Course</option>
                 {courseOptions.map((option) => (
-                  <option key={option._id} value={option.courseCode && option.courseName}>
+                  <option key={option._id} 
+                          value={option.courseCode && option.courseName}
+                          onClick={() => handleCourseClick(option.courseCode, option.courseName, index + 1)}>
                     {option.courseCode} - {option.courseName}
                   </option>
                 ))}

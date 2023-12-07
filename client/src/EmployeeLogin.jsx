@@ -18,7 +18,7 @@ function EmployeeLogin() {
         .then(result => {console.log(result)
           if(result.data === "success"){
             alert('Login SuccesFully!');
-            navigate('/admin-page')
+            navigate('/dashboard')
     
           }
         })

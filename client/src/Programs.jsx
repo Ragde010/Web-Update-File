@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
+
 function Programs() {
   const currentYear = new Date().getFullYear();
   return (
@@ -123,212 +124,179 @@ function Programs() {
           </Row>
         </Container>
       </section>
-      
-      <section className="bg-white py-5">
-        <Container>
-          <Row>
-            <Col>
-              <h1>Program Description</h1>
-              <p>
-                Gain practical experience in the cycles of software development
-                through hands-on learning and real projects. You'll gain an
-                understanding of industry standards of planning, developing, and
-                quality assurance testing.
-              </p>
-              <hr />
-              <h1>Program Description</h1>
-              <p>
-                Gain practical experience in the cycles of software development
-                through hands-on learning and real projects. You'll gain an
-                understanding of industry standards of planning, developing, and
-                quality assurance testing.
-              </p>
-            </Col>
-            <Col>
-              <Button variant="primary">Click me</Button>
-              <Button variant="secondary">Click me</Button>
-              <Button variant="warning">Click me</Button>
-            </Col>
-          </Row>
-        </Container>
+
+      <section className="d-flex flex-column bg-white">
+        <div className="d-flex flex-row  p-5 w-75">
+          <div className="d-flex flex-column w-75">
+            <h1>Program Description</h1>
+            <p>
+              Gain practical experience in the cycles of software development
+              through hands-on learning and real projects. You'll gain an
+              understanding of industry standards of planning, developing, and
+              quality assurance testing.
+            </p>
+          </div>
+          <hr />
+        </div>
       </section>
 
-      <section className="bg-darkblue py-5">
-        <Container className="bg-blue">
-          <Row>
-            <Col className="bg-dark">1</Col>
-            <Col className="bg-dark">2</Col>
-          </Row>
-        </Container>
+      <section className="d-flex flex-column bg-white py-5">
+        <div ID="1ST TERM" className=''>
+          <div className="py-2">
+            <div >
+              <div className="text-left px-5">
+                <h1 className="text-4xl mb-1" style={{ fontWeight: 'bold', }}>Course Listing</h1>
+                <p className="text-lg">
+                  Curriculum subject to change. Current students should confirm
+                  program requirements with their academic advisor.
+                </p>
+              </div>
+            </div>
+            <div>
+              <div className="px-5">
+                <h2 className="text-2xl mb-1" style={{ fontWeight: 'bold', }}>Term 1</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="mx-5" style={{ backgroundColor: "gainsboro" }}>
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+          </div>
+        </div>
+
+        <div ID="2ND TERM" className=''>
+          <div className="py-2">
+
+            <div>
+              <div className="px-5">
+                <h2 className="text-2xl mb-1" style={{ fontWeight: 'bold', }}>Term 2</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="mx-5" style={{ backgroundColor: "gainsboro" }}>
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+          </div>
+        </div>
+        <div ID="3RD TERM" className=''>
+          <div className="py-2">
+
+            <div>
+              <div className="px-5">
+                <h2 className="text-2xl mb-1" style={{ fontWeight: 'bold', }}>Term 3</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="mx-5" style={{ backgroundColor: "gainsboro" }}>
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+          </div>
+        </div>
+
+        <div ID="4TH TERM" className=''>
+          <div className="py-2">
+
+            <div>
+              <div className="px-5">
+                <h2 className="text-2xl mb-1" style={{ fontWeight: 'bold', }}>Term 4</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="mx-5" style={{ backgroundColor: "gainsboro" }}>
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+            <hr />
+            <Row className="py-3">
+              <Col>SODV1101 - Programming Fundamentals</Col>
+              <Col md="auto">Credits of 3</Col>
+              <Col xs lg="2"></Col>
+            </Row>
+          </div>
+        </div>
       </section>
 
-      <section className="bg-white py-5">
-        <Container>
-          <Row className="py-5">
-            <Col className="text-center">
-              <h1 className="text-4xl mb-4">Course Listing</h1>
-              <p className="text-lg">
-                Curriculum subject to change. Current students should confirm
-                program requirements with their academic advisor.
-              </p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h1 className="text-2xl mb-4">Term 1</h1>
-            </Col>
-          </Row>
-        </Container>
-        <Container className="bg-darkblue">
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-        </Container>
-        <Container>
-          <Row className="py-5">
-            <Col className="text-center">
-              <h1 className="text-4xl mb-4">Course Listing</h1>
-              <p className="text-lg">
-                Curriculum subject to change. Current students should confirm
-                program requirements with their academic advisor.
-              </p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h1 className="text-2xl mb-4">Term 2</h1>
-            </Col>
-          </Row>
-        </Container>
-        <Container className="bg-darkblue">
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-        </Container>
-        <Container>
-          <Row className="py-5">
-            <Col className="text-center">
-              <h1 className="text-4xl mb-4">Course Listing</h1>
-              <p className="text-lg">
-                Curriculum subject to change. Current students should confirm
-                program requirements with their academic advisor.
-              </p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h1 className="text-2xl mb-4">Term 1</h1>
-            </Col>
-          </Row>
-        </Container>
-        <Container className="bg-darkblue">
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-        </Container>
-        <Container>
-          <Row className="py-5">
-            <Col className="text-center">
-              <h1 className="text-4xl mb-4">Course Listing</h1>
-              <p className="text-lg">
-                Curriculum subject to change. Current students should confirm
-                program requirements with their academic advisor.
-              </p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h1 className="text-2xl mb-4">Term 3</h1>
-            </Col>
-          </Row>
-        </Container>
-        <Container className="bg-darkblue">
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <hr />
-          <Row className="py-3">
-            <Col>SODV1101 - Programming Fundamentals</Col>
-            <Col md="auto">Credits of 3</Col>
-            <Col xs lg="2"></Col>
-          </Row>
-        </Container>
-  </section> 
-      
       <Footer currentYear={currentYear} />
     </div>
   );

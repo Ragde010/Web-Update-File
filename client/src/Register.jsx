@@ -57,7 +57,7 @@ function Register() {
                 confirmPassword
             });
             console.log("User registered successfully:", mongoDBResponse.data);
-            navigate('/login');
+            navigate('/login-option');
         } catch (error){
             setError(error.message)
         }
@@ -270,7 +270,10 @@ function Register() {
                             </p>
                         </div>
                     </div>
-                </div>    
+                </div>  
+                <div className="copyright d-flex justify-content-center align-items-center">
+      <p>&copy; 2023 Bow Course Registration. All rights reserved.</p>
+      </div>  
             </div>
         </form>
     </div>

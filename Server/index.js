@@ -1,6 +1,7 @@
 const express = require ("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
+// const ObjectId = mongoose.Types.ObjectId;
 const StudentModel = require('./models/Student.js')
 const EmployeeModel = require('./models/Employee.js')
 const CourseModel = require('./models/Course.js')
@@ -8,6 +9,9 @@ const StudentRegisterModel = require('./models/StudentRegister.js')
 const StudentRegistrationModel = require('./models/Student-Register.js')
 const StudentCourseRegisterModel = require('./models/StudentCourseRegister.js')
 const MessageModel = require('./models/Message.js')
+const CourseRegisteredModel = require('./models/CourseRegistered.js')
+const ExchangeCourseModel = require("./models/ExchangeCourses.js")
+const NewExchangeCourseModel = require('./models/NewExchangeCourse.js')
 
 const app = express()
 app.use(express.json()) 
@@ -30,6 +34,7 @@ app.post("/login", (req, res ) =>{
             }
     })
 })
+
 app.post("/employeelogin", (req, res ) =>{
     const {username, password} = req.body;
     EmployeeModel.findOne({username: username})
@@ -63,6 +68,58 @@ app.post('/employee-register', (req, res) => {
     .catch(err => res.json(err))
     
     });
+// a route for course registration and delete courses in the data
+app.post('/register-course', async (req, res) => {
+    try {
+      const combinedCourseData = req.body.combinedCourseData;
+      const newCourse = new CourseRegisteredModel(combinedCourseData);
+      const savedCourse = await newCourse.save();
+
+      // Remove the registered course from the list of available courses
+    //   console.log('Deleting course with ID:', combinedCourseData._id);
+    const updatedCourseData = await CourseModel.deleteOne({ _id: combinedCourseData._id });
+    // console.log('Course deleted:', updatedCourseData);
+        
+      res.json({ message: 'Course registered successfully', course: savedCourse, updatedCourseData });
+    } catch (error) {
+      res.status(500).json({ error: 'Error registering course', details: error.message });
+    }
+  });
+  // endpoint for exchange  the new courses to old courses 
+app.post('/remove-exchange-course', async (req, res) => {
+    try {
+      const combinedCourseData = req.body.combinedCourseData;
+      const newCourse = new NewExchangeCourseModel(combinedCourseData);
+      const savedCourse = await newCourse.save();
+
+    //   // Convert the _id to ObjectId format
+    // const courseId = new ObjectId(combinedCourseData._id);
+
+      // Remove the registered course from the list of available courses
+      console.log('Deleting course with ID:', combinedCourseData._id);
+    const updatedCourseData = await ExchangeCourseModel.findOneAndDelete({ _id: combinedCourseData._id  });
+    console.log('Course deleted:', updatedCourseData);
+        
+      res.json({ message: 'Course registered successfully', course: savedCourse.toObject(), updatedCourseData });
+    } catch (error) {
+      res.status(500).json({ error: 'Error registering course', details: error.message });
+    }
+  });
+// a route for course removal in the viewcourse 
+app.post('/remove-course', async (req, res) => {
+    try {
+      const combinedCourseData = req.body.combinedCourseData;
+      const newCourse = new ExchangeCourseModel(combinedCourseData);
+      const savedCourse = await newCourse.save();
+  
+      res.json({ message: 'Course remove successfully', course: savedCourse });
+    } catch (error) {
+      res.status(500).json({ error: 'Error registering course', details: error.message });
+    }
+  });
+
+
+    
 // Student Registration
 app.post('/student-register', (req, res) => {
     StudentRegistrationModel.create(req.body)
@@ -97,9 +154,10 @@ app.get('/admin-page', (req, res) => {
     .then(Courses => res.json(Courses))
     .catch(err => res.json(err))
 })
+// endpoint for get coursedata to view courses
 app.get('/get-student-course-data', (req, res) => {
-    StudentCourseRegisterModel.find({})
-    .then(StudentCourseRegistered => res.json(StudentCourseRegistered))
+    CourseRegisteredModel.find({})
+    .then(CourseRegistered => res.json(CourseRegistered))
     .catch(err => res.json(err))
 })
 app.get('/getnewcourse', (req, res) => {
@@ -134,6 +192,12 @@ app.get('/getsearch-course', (req, res) => {
     .then(Courses => res.json(Courses))
     .catch(err => res.json(err))
 })
+// endpoint for get courses to put in exchange course
+app.get('/getcoursedata', (req, res) => {
+    CourseModel.find({})
+    .then(Courses => res.json(Courses))
+    .catch(err => res.json(err))
+})
 // GET the use firstname and lastname
 app.get('/getuserdata/:id', (req, res) => {
     const id = req.params.id;
@@ -142,25 +206,131 @@ app.get('/getuserdata/:id', (req, res) => {
     .catch(err => res.json(err))
 })
 
+// To get new courses for student 
+app.get('/get-course-data', (req, res) => {
+    CourseModel.find({})
+    .then(Courses =>{
+        // console.log('Courses:', Courses); // Log the courses
+        res.json(Courses);
+    }) 
+    .catch(err => res.json(err))
+})
+// To get exchange courses for student 
+app.get('/getcoursedata-toexchange', (req, res) => {
+    ExchangeCourseModel.find({})
+    .then(ExchangeCourse =>{
+        // console.log('Courses:', Courses); // Log the courses
+        res.json(ExchangeCourse);
+    }) 
+    .catch(err => res.json(err))
+})
+// // To get newexchange courses for student 
+// app.get('/getnewcoursedata-toexchange', (req, res) => {
+//     NewExchangeCourseModel.find({})
+//     .then(NewExchangeCourse =>{
+//         // console.log('Courses:', Courses); // Log the courses
+//         res.json(NewExchangeCourse);
+//     }) 
+//     .catch(err => res.json(err))
+// })
+// to Update the courses added by the Admin
 app.put('/updatecourse/:id', (req, res) => {
     const id = req.params.id;
     CourseModel.findByIdAndUpdate({_id:id}, {
         courseCode: req.body.courseCode, 
         courseName: req.body.courseName, 
         courseStart: req.body.courseStart, 
-        courseEnds: req.body.courseEnds,
+        courseEnds: req.body.courseEnds, 
+        deliveryMode: req.body.deliveryMode,
+        credits: req.body.credits,
+        campus: req.body.campus,
         fees: req.body.fees,
         description: req.body.description
     }) 
     .then(Courses => res.json(Courses))
     .catch(err => res.json(err))
 })
+// To update to the exchange registred courses in the student dashboard
+app.put('/update-courses-registered/:id', async(req, res) =>{
+    const courseId = req.params.id;
+
+  try {
+    // Find the course by ID
+    const course = await CourseModel.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+
+    // Update each course field based on the request body
+    for (let key in req.body) {
+      course[key] = req.body[key];
+    }
+
+    // Save the updated course
+    const updatedCourse = await course.save();
+
+    res.json(updatedCourse);
+  } catch (error) {
+    console.error('Error updating course:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+// Endpoint to handle dropping courses
+app.put('/drop-courses/:id', async (req, res) => {
+    console.log('Drop courses route triggered'); // Add this line
+    const id = req.params.id;
+    const { coursesToDrop } = req.body;
+  
+    try {
+        console.log('Dropping courses:', coursesToDrop); // Add this line
+      const student = await StudentCourseRegisterModel.findById({_id : id});
+      console.log('Before update:', student.formData);
+      if (!student) {
+        return res.status(404).json({ error: 'Student not found' });
+      }
+  
+      coursesToDrop.forEach((course) => {
+        student.formData[`Course${course}`] = '';
+      });
+  
+      // Save the updated student data
+      await student.save();
+      console.log('After update:', student.formData);
+  
+      res.json({
+        message: 'Courses dropped successfully',
+        updatedFormData: student.formData, // Send back the updated form data
+      });
+    } catch (error) {
+      console.error('Error dropping courses:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+  
+  
 app.delete('/deletecourse/:id', (req, res) => {
     const id = req.params.id;
     CourseModel.findByIdAndDelete({ _id : id })
     .then(()=>res.json(res))
     .catch(err => res.json(err))
 })
+// Endpoint for deleting registered courses
+app.delete('/delete-course/:id', async (req, res) => {
+    const courseId = req.params.id;
+  
+    try {
+      // Perform the deletion in your database based on the courseId
+      await CourseRegisteredModel.findByIdAndDelete(courseId);
+  
+      res.json({ message: 'Course deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Error deleting course', details: error.message });
+    }
+  });
+  
 
 
 app.listen(3001, () => {
