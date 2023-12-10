@@ -31,7 +31,7 @@ function NewLogin() {
     <Navigation />
     <div className="background-image d-flex justify-content-center align-items-center vh-100">
       <div className="bg-light p-3 rounded w-25 border-2 shadow-lg">
-        <h2 className="text-center mb-4">Login</h2>
+        <h2 className="text-center mb-4" style={{ color: 'darkblue', fontWeight: 600 }}> Student Login</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -59,18 +59,18 @@ function NewLogin() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="btn btn-primary w-100">
-            <strong>Login</strong>
+          <button type="submit" className="btn btn-primary w-100 text-white " style={{ backgroundColor: 'darkblue' }}>
+            Login
           </button>
           <Link to='/forgot-password' className="d-block mt-2 text-center">Forgot Password?</Link>
           <hr className="my-2" />
-          <div className="text-center mt-3">
+          {/* <div className="text-center mt-3">
             <Link to='/' className="btn btn-success w-100">Sign In with Phone Number</Link>
-          </div>
+          </div> */}
           <p className="mt-2 text-center">
             Don't have an Account?{" "}
             <Link to="/newregistration" className="text-decoration-none">
-              <strong>Sign Up </strong>
+              <strong> Create an Account </strong>
             </Link>
           </p>
         </form>

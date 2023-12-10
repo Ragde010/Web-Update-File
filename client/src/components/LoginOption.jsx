@@ -12,14 +12,14 @@ function LoginOption() {
     <Navigation />
   
     <div className='background-image d-flex justify-content-center align-items-center vh-100'>
-      <div className='bg-light p-3 rounded w-25 border-2 shadow-lg'>
-        <h2 className="text-center mb-4">Choose for Login</h2>
+      <div className='bg-light p-3 rounded w-25 border-2 shadow-lg mb-5'>
+        <h2 className="text-center mb-4"style={{ color: 'darkblue', fontWeight: 800 }}>Choose for Login</h2>
         <div className='mb-3'>
-          <Link to="/newlogin" className="btn btn-primary btn-lg w-100 text-uppercase fw-bold">Student</Link>
+          <Link to="/newlogin" className="btn btn-primary btn-lg w-100 text-uppercase fw-bold"style={{ backgroundColor: 'darkblue' }}>Student</Link>
         </div>
 
         <div className='mb-3'>
-          <Link to="/employee-login" className="btn btn-primary btn-lg w-100 text-uppercase fw-bold">Employee</Link>
+          <Link to="/employee-login" className="btn btn-primary btn-lg w-100 text-uppercase fw-bold" style={{ backgroundColor: 'darkblue' }}>Employee</Link>
         </div>
       </div>
     </div>

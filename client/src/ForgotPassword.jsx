@@ -17,7 +17,7 @@ function ForgotPassword() {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         setError("");
-            // Validation check for empty email
+           
         if (!email) {
             setError("Email cannot be empty");
             return;

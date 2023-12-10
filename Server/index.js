@@ -98,7 +98,7 @@ app.post('/remove-exchange-course', async (req, res) => {
 
       // Remove the registered course from the list of available courses
       console.log('Deleting course with ID:', combinedCourseData._id);
-    const removedCourse = await ExchangeCourseModel.findOneAndDelete({ _id: combinedCourseData._id  });
+    const removedCourse = await ExchangeCourseModel.Delete({ _id: combinedCourseData._id  });
     console.log('Course deleted:', removedCourse);
         
       res.json({ message: 'Course registered successfully', course: savedCourse.toObject(), removedCourse });

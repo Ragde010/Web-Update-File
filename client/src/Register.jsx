@@ -10,7 +10,6 @@ import { useUserAuth } from "./context/UserAuthContext";
 function Register() {
     const [displayName, setdisplayName] = useState("");
     const [email, setEmail] = useState("");
-    const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [department, setDepartment] = useState("");
@@ -52,7 +51,7 @@ function Register() {
         <form onSubmit={handleSubmit}>
             <div className="card shadow-lg">
                 <div className="card-header">
-                    <h1 className="mb-0">Create an Account</h1>
+                    <h1 className="mb-0" style={{ color: 'darkblue', fontWeight: 800 }}>Create an Account</h1>
                     {error && <Alert variant='danger'>{error}</Alert>}
                 </div>
                 <div className="card-body">
@@ -68,54 +67,6 @@ function Register() {
                                     value={studentID}
                                     readOnly
                                     className="form-control rounded-1"
-                                />
-                            </div>
-                        </div>
-                        <div className="col-lg-6 mb-1">
-                            <div className="form-group">
-                                <label htmlFor="displayName">
-                                    <span style={{fontSize: "17px"}}>Full Name</span>
-                                    <span className="errmsg">*</span>
-                                    <span className="text-muted ml-2">(e.g., John Doe)</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    name="displayName"
-                                    value={displayName}
-                                    className="form-control rounded-1 shadow-sm"
-                                    onChange={(e) => setdisplayName(e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-lg-6 mb-1">
-                            <div className="form-group">
-                                <label htmlFor="dateOfBirth">
-                                    <span style={{fontSize: "17px"}}>Date of Birth</span>
-                                    <span className="errmsg">*</span>
-                                    <span className="text-muted ml-2">(Select your birthdate)</span>
-                                </label>
-                                <input
-                                    type="date"
-                                    name="dateOfBirth"
-                                    value={dateOfBirth}
-                                    className="form-control rounded-1 shadow-sm"
-                                    onChange={(e) => setDateOfBirth(e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-lg-6 mb-1">
-                            <div className="form-group">
-                                <label htmlFor="email">
-                                    <span style={{fontSize: "17px"}}>Email</span>
-                                    <span className="errmsg">*</span>
-                                    <span className="text-muted ml-2">(e.g., john.doe@example.com)</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    name="email"
-                                    value={email}
-                                    className="form-control rounded-1 shadow-sm"
-                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -137,6 +88,22 @@ function Register() {
                                     <option value="School of Technology">School of Technology</option>
                                     <option value="Chiu School of Business Programs">Chiu School of Business Programs</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div className="col-lg-6 mb-1">
+                            <div className="form-group">
+                                <label htmlFor="displayName">
+                                    <span style={{fontSize: "17px"}}>Full Name</span>
+                                    <span className="errmsg">*</span>
+                                    <span className="text-muted ml-2">(e.g., John Doe)</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    name="displayName"
+                                    value={displayName}
+                                    className="form-control rounded-1 shadow-sm"
+                                    onChange={(e) => setdisplayName(e.target.value)}
+                                />
                             </div>
                         </div>
                         <div className="col-lg-6 mb-1">
@@ -163,17 +130,17 @@ function Register() {
                         </div>
                         <div className="col-lg-6 mb-1">
                             <div className="form-group">
-                                <label htmlFor="username">
-                                    <span style={{fontSize: "17px"}}>Username</span>
+                                <label htmlFor="dateOfBirth">
+                                    <span style={{fontSize: "17px"}}>Date of Birth</span>
                                     <span className="errmsg">*</span>
-                                    <span className="text-muted ml-2">(Choose a username)</span>
+                                    <span className="text-muted ml-2">(Select your birthdate)</span>
                                 </label>
                                 <input
-                                    type="text"
-                                    name="username"
-                                    value={username}
+                                    type="date"
+                                    name="dateOfBirth"
+                                    value={dateOfBirth}
                                     className="form-control rounded-1 shadow-sm"
-                                    onChange={(e) => setUserName(e.target.value)}
+                                    onChange={(e) => setDateOfBirth(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -202,6 +169,25 @@ function Register() {
                                 </div>
                             </div>
                         </div>
+                       
+                        
+                        <div className="col-lg-6 mb-1">
+                            <div className="form-group">
+                                <label htmlFor="email">
+                                    <span style={{fontSize: "17px"}}>Email</span>
+                                    <span className="errmsg">*</span>
+                                    <span className="text-muted ml-2">(e.g., john.doe@example.com)</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    name="email"
+                                    value={email}
+                                    className="form-control rounded-1 shadow-sm"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        
                         <div className="col-lg mb-1">
                         <div className="form-group">
                             <label htmlFor="confirmPassword">
@@ -228,7 +214,7 @@ function Register() {
                         </div>
                     </div>
                         <div className="d-flex justify-content-center align-items-center">
-                            <button type="submit" className="btn btn-primary w-50 mt-4 mx-auto">Register</button>
+                            <button type="submit" className="btn btn-primary w-50 mt-4 mx-auto border-black" style={{ backgroundColor: 'darkblue' }}>Register</button>
                         </div>
                         <div className="text-center mt-3">
                             <hr className="my-2" />
@@ -237,7 +223,7 @@ function Register() {
                             <p>
                                 Already have an Account?{" "}
                                 <Link to="/newlogin" className="text-decoration-none">
-                                    <strong>Login</strong>
+                                    <strong>Sign in</strong>
                                 </Link>
                             </p>
                         </div>

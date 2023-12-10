@@ -35,15 +35,11 @@ function EmployeeRegister() {
         if (password !== confirmPassword) {
             return setError("Passwords do not match!");
         }
-  //       // Log the values for debugging
-  // console.log("Email:", email);
-  // console.log("Password:", password);
-  // console.log("DisplayName:", displayName);
-  // console.log("AdminID:", adminID);
+  
         try {
             await signUp(email, password, displayName, adminID);
             navigate('/employee-login');
-            // No need to navigate here as the onAuthStateChanged will handle redirection on successful signup
+           
         } catch (error) {
             console.error("Registration error:", error);
             setError(error.message);
@@ -55,7 +51,7 @@ function EmployeeRegister() {
       <form className='container my-5 p-4'onSubmit={handleSubmit}>
         <div className='card shadow-lg '>
           <div className='card-header'>
-            <h1 className='mb-0'> Create an Account</h1>
+            <h1 className='mb-0'style={{ color: 'darkblue', fontWeight: 800 }}> Create an Account</h1>
             {error && <Alert variant='danger'>{error}</Alert>}
           </div>
           <div className='card-body'>
@@ -170,7 +166,7 @@ function EmployeeRegister() {
                 </div>
             </div> 
               
-                <button type='submit' className='btn btn-primary w-100'><strong>Register</strong></button>
+                <button type='submit' className='btn btn-primary w-100' style={{ backgroundColor: 'darkblue' }}><strong>Register</strong></button>
                 <div className="text-center mt-3">
                             <hr className="my-2" />
                         </div>
