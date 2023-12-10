@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Modal, Button} from 'react-bootstrap';
 import axios from 'axios';
+import { useUserAuth } from '../context/UserAuthContext';
 
 
 function NewAddCourse() {
@@ -8,7 +9,11 @@ function NewAddCourse() {
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [selectedCourseDetails, setSelectedCourseDetails] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
+    const { studentDetails} = useUserAuth();
+    const [term, setTerm] = useState("");
 
+  
+   
     useEffect(() => {
         // Fetch course data from the database
         axios.get('http://localhost:3001/get-course-data')
@@ -35,6 +40,11 @@ function NewAddCourse() {
             withdrawal: selectedCourseDetails.withdrawal,
             instructor: selectedCourseDetails.instructor,
             fees: selectedCourse.fees,  
+            term: term,
+            displayName: studentDetails.studentID, // Use studentDetails.displayName
+           studentID: studentDetails.displayName, // Use studentDetails.studentID
+ 
+            
           };
         //   console.log('Deleting course with ID:', combinedCourseData._id)
         axios.post('http://localhost:3001/register-course', { combinedCourseData })
@@ -83,6 +93,31 @@ function NewAddCourse() {
           className="mb-3 border-1 shawdow-md rounded "
           style={{ padding: '5px' }}
         />
+        <div className='row mb-2'>
+          <div className='col md-3'>
+            <label htmlFor="" className='text-bold'>Name:
+              <input type="text" 
+                     value={studentDetails?.studentID}
+                     className='form-control rounded-1 border-1 shadow-lg '
+                     disabled/>
+            </label>
+            <label htmlFor="" className='text-bold'>StudentID:
+              <input type="text" 
+                     value={studentDetails?.displayName}
+                     className='form-control rounded-1 border-1 shadow-lg'
+                     disabled/>
+            </label>
+            <label htmlFor="term" className='text-bold'>Term
+             <select type= "text" name="term" className='form-control rounded-1  border-2  shadow-lg mb-2'onChange={(e) => setTerm(e.target.value)}> 
+              <option value="">Select Term</option>
+              <option value="Term1 (September1–December20)">Term1 (September1–December20)</option>
+              <option value="Term2 (Jan5–May2)">Term2 (Jan5–May2)</option>
+              <option value="Term3 (Sept1-December20)">Term3 (Sept1-December20)</option>
+              <option value="Term4 (Jan5–May2)">Term4 (Jan5–May2)</option>
+             </select>
+            </label>
+          </div>
+        </div>
       <div className='row w-100'>
         {filteredCourses.map((course, index) => (
           <div key={index} className='mb-3'>

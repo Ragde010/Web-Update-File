@@ -13,7 +13,9 @@ const CourseRegisteredSchema = new mongoose.Schema({
     withdrawal: String,
     instructor: String,
     fees: String,
-    
+    displayName: String,
+    studentID: String,
+    term:String,
 })
 
 // For creating a new Table "StudentInfo" to the database and store the data

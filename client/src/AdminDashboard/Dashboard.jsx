@@ -3,28 +3,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FiLogOut,FiLayout, FiSearch} from 'react-icons/fi';
 import { FaUser, FaEnvelope, FaBookOpen, FaBook, FaList} from 'react-icons/fa';
 import '../CSS/Dashstyle.css'
-import { useUserAuth } from '../context/UserAuthContext';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
-import StudentAddCourse from '../StudentDashboard/StudentAddCourse';
-import Message from './Message';
-
-
+// import StudentAddCourse from '../StudentDashboard/StudentAddCourse';
+import { useAdminAuth } from '../context/AdminAuthContext';
+import Adminpage from './Adminpage';
+import Update from './Update';
+import '../CSS/Adminpage.css'
 
 
 function Dashboard() {
     const [activeComponent, setActiveComponent] = useState('Dashboard');
-    const {user, logOut} = useUserAuth();
+    const { adminUser, logOut, adminDetails } = useAdminAuth();
     const navigate = useNavigate();
     const [allData, setAllData] = useState([]);
     const [filteredData,setFilteredData] = useState(allData);
    
    
-    console.log(user)
+    console.log(adminUser)
     const handleLogout = async() => {
       try {
         await logOut();
-        navigate('/newlogin');
+        navigate('/employee-login');
       } catch (error) {
         console.log(error.message);
       }
@@ -58,15 +58,16 @@ function Dashboard() {
         <div className="col-3 sidebar">
              <div className="user-profile">
              <FaUser className="user-icon"/>
-                <p className='text-bold'>{user && user.displayName}</p>
-                 <p>ADMINISTRATOR</p>
+                <h3 className='text-white'>{adminDetails?.displayName}</h3>
+                <p className='text-bold'>{adminDetails?.adminID}</p>
+               
              </div>
              <ul className="nav-menu">
                 <li onClick={() => setActiveComponent('Dashboard')}><FiLayout style={{ fontSize: '24px', marginRight: '10px' }}/>Dashboard</li>
                 <li onClick={() => setActiveComponent('Addcourse')}><FaBook style={{ fontSize: '24px', marginRight: '10px' }}/>Add Course</li>
-                <li onClick={() => setActiveComponent('Viewcourse')}><FaBookOpen style={{ fontSize: '24px', marginRight: '10px' }}/>View course</li>
+                <li onClick={() => setActiveComponent('Updatecourse')}><FaBookOpen style={{ fontSize: '24px', marginRight: '10px' }}/>View course</li>
                 <li onClick={() => setActiveComponent('StudentList')}><FaList style={{ fontSize: '24px', marginRight: '10px' }}/>Student List</li>
-                <li onClick={() => setActiveComponent('Message')}><FaEnvelope style={{ fontSize: '24px', marginRight: '10px' }}/>Messages</li>
+                <li onClick={() => setActiveComponent('AdminPage')}><FaEnvelope style={{ fontSize: '24px', marginRight: '10px' }}/>AdminPage</li>
                 <li onClick={() => setActiveComponent('Search')}><FiSearch style={{ fontSize: '24px', marginRight: '10px' }}/>Search</li>
                
           
@@ -74,7 +75,7 @@ function Dashboard() {
                 <button onClick={handleLogout} className="logout-btn">Log out <FiLogOut/> </button>
        </div>
 
-      <div className="col-8 main-content">
+      <div className="col-8">
         <div className='header'>
         <div className="d-flex justify-content-between align-items-center mb-3 ">
             <h1 className='text-bold mt-5 '>ADMIN COURSE MANAGEMENT</h1>
@@ -84,9 +85,9 @@ function Dashboard() {
       
         {activeComponent === 'Dashboard' && <DashboardComponent />}
         {activeComponent === 'Addcourse' && <AddcourseComponent />}
-        {activeComponent === 'Viewcourse' && <ViewcourseComponent />}
+        {activeComponent === 'Updatecourse' && <UpdatecourseComponent />}
         {activeComponent === 'StudentList' && <StudentListComponent />}
-        {activeComponent === 'Message' && <MessageComponent />}
+        {activeComponent === 'AdminPage' && <AdminPageComponent />}
         {activeComponent === 'Search' && <SearchComponent handleSearch={handleSearch} filteredData={filteredData}/>}
       </div>
     </div>
@@ -127,15 +128,13 @@ return (
 
 function AddcourseComponent() {
 return (
-  <StudentAddCourse />
+  <Adminpage/>
+  // <StudentAddCourse />
 );
 }
-function ViewcourseComponent() {
+function UpdatecourseComponent() {
 return (
-  <div>
-    {/* Your Top List content */}
-    <h2>View my Course</h2>
-  </div>
+  <Update />
 );
 }
 function StudentListComponent(){
@@ -144,11 +143,77 @@ function StudentListComponent(){
   )
 
 }
-function MessageComponent() {
-return (
-    <Message />
-);
+function AdminPageComponent(){
+  const [courses, setCourse] = useState([])
+
+  useEffect(()=> {
+    axios.get("http://localhost:3001/admin-page")
+    .then(result => setCourse(result.data))
+    .catch(err => console.log(err))
+  }, [])
+
+  const handleDelete = (id) => {
+    axios.delete('http://localhost:3001/deletecourse/'+id)
+    .then(res => {console.log(res)
+        window.location.reload();
+  })
+    .catch(err => console.log(err))
+
+  }
+  return (
+    <div className='d-flex vh-100  justify-content-center align-items-center '>
+      <div className='w-100 h-100 bg-white rounded p-3'>
+        <Link to="/create-course" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> <strong>+</strong> Add Course</Link>
+        <Link to="/viewstudentList" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> Student List</Link>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>CourseCode</th>
+                <th>CourseName</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>DropDate</th>
+                <th>WithdrawalDate</th>
+                <th>Instructor</th>
+                <th>Campus</th>
+                <th>Credits</th>
+                <th>DeliveryMode</th>
+                <th>Fees</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+            </thead> 
+            <tbody>
+              {
+                courses.map((course) => {
+                  return <tr key= {course._id}>
+                    <td className='text-bold'>{course.courseCode}</td>
+                    <td>{course.courseName}</td>
+                    <td>{course.courseStart}</td>
+                    <td>{course.courseEnds}</td>
+                    <td>{course.dropCourse}</td>
+                    <td>{course.withdrawal}</td>
+                    <td>{course.instructor}</td>
+                    <td>{course.campus}</td>
+                    <td>{course.credits}</td>
+                    <td>{course.deliveryMode}</td>
+                    <td className='text-bold'>{course.fees}</td>
+                    <td>{course.description}</td>
+                    <td>
+                      <Link to={`/update-course/${course._id}`} className='btn btn-primary'style={{ backgroundColor: 'darkblue' }}>Update</Link>
+                      <button className= 'btn btn-primary' style={{ backgroundColor: 'darkblue' }}onClick={(e) => handleDelete(course._id)}>Delete</button>
+                    </td>
+                  </tr>
+                })
+              }
+            </tbody>
+          </table>
+      </div>
+    </div>
+  )
+
 }
+
 function SearchComponent({ handleSearch, filteredData }){
   return(
     <div>

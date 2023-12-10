@@ -26,11 +26,13 @@ import StudentDashboard from "./StudentDashboard/StudentDashboard";
 import ProtectedRouter from "./ProtectedRouter";
 import Messages from "./StudentDashboard/Messages";
 import ExchangeCourse from "./StudentDashboard/ExchangeCourse";
+import {AdminAuthContextProvider} from '../src/context/AdminAuthContext'
 
 function App() {
   return (
     <BrowserRouter>
       <ToastContainer />
+      <AdminAuthContextProvider>
       <UserAuthContextProvider>
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
@@ -58,6 +60,7 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
       </Routes>
       </UserAuthContextProvider>
+      </AdminAuthContextProvider>
     </BrowserRouter>
   );
 }

@@ -36,11 +36,11 @@ app.post("/login", (req, res ) =>{
 })
 
 app.post("/employeelogin", (req, res ) =>{
-    const {username, password} = req.body;
-    EmployeeModel.findOne({username: username})
-    .then(student => {
-        if(student){
-                if (student.password === password) {
+    const {email, password} = req.body;
+    EmployeeModel.findOne({email: email})
+    .then(employee => {
+        if(employee){
+                if (employee.password === password) {
                     res.json("success");
                 } else {
                     res.json("incorrect");
@@ -72,12 +72,16 @@ app.post('/employee-register', (req, res) => {
 app.post('/register-course', async (req, res) => {
     try {
       const combinedCourseData = req.body.combinedCourseData;
+      console.log('Received data:', combinedCourseData); 
+      // Check if displayName and studentID are present
+    console.log('DisplayName:', combinedCourseData.displayName);
+    console.log('StudentID:', combinedCourseData.studentID);
       const newCourse = new CourseRegisteredModel(combinedCourseData);
       const savedCourse = await newCourse.save();
 
       // Remove the registered course from the list of available courses
     //   console.log('Deleting course with ID:', combinedCourseData._id);
-    const updatedCourseData = await CourseModel.deleteOne({ _id: combinedCourseData._id });
+    const updatedCourseData = await CourseModel.findByIdAndUpdate({ _id: combinedCourseData._id });
     // console.log('Course deleted:', updatedCourseData);
         
       res.json({ message: 'Course registered successfully', course: savedCourse, updatedCourseData });
@@ -92,15 +96,12 @@ app.post('/remove-exchange-course', async (req, res) => {
       const newCourse = new NewExchangeCourseModel(combinedCourseData);
       const savedCourse = await newCourse.save();
 
-    //   // Convert the _id to ObjectId format
-    // const courseId = new ObjectId(combinedCourseData._id);
-
       // Remove the registered course from the list of available courses
       console.log('Deleting course with ID:', combinedCourseData._id);
-    const updatedCourseData = await ExchangeCourseModel.findOneAndDelete({ _id: combinedCourseData._id  });
-    console.log('Course deleted:', updatedCourseData);
+    const removedCourse = await ExchangeCourseModel.findOneAndDelete({ _id: combinedCourseData._id  });
+    console.log('Course deleted:', removedCourse);
         
-      res.json({ message: 'Course registered successfully', course: savedCourse.toObject(), updatedCourseData });
+      res.json({ message: 'Course registered successfully', course: savedCourse.toObject(), removedCourse });
     } catch (error) {
       res.status(500).json({ error: 'Error registering course', details: error.message });
     }
@@ -183,8 +184,8 @@ app.get('/getcourse/:id', (req, res) => {
     .catch(err => res.json(err))
 })
 app.get('/getstudentList', (req, res) => {
-    StudentRegisterModel.find({})
-    .then(StudentRegister => res.json(StudentRegister))
+  CourseRegisteredModel.find({})
+    .then(CourseRegistered => res.json(CourseRegistered))
     .catch(err => res.json(err))
 })
 app.get('/getsearch-course', (req, res) => {
@@ -224,15 +225,7 @@ app.get('/getcoursedata-toexchange', (req, res) => {
     }) 
     .catch(err => res.json(err))
 })
-// // To get newexchange courses for student 
-// app.get('/getnewcoursedata-toexchange', (req, res) => {
-//     NewExchangeCourseModel.find({})
-//     .then(NewExchangeCourse =>{
-//         // console.log('Courses:', Courses); // Log the courses
-//         res.json(NewExchangeCourse);
-//     }) 
-//     .catch(err => res.json(err))
-// })
+
 // to Update the courses added by the Admin
 app.put('/updatecourse/:id', (req, res) => {
     const id = req.params.id;
@@ -241,6 +234,9 @@ app.put('/updatecourse/:id', (req, res) => {
         courseName: req.body.courseName, 
         courseStart: req.body.courseStart, 
         courseEnds: req.body.courseEnds, 
+        dropCourse: req.body.drpCourse,
+        withdrawal: req.body.withdrawal,
+        instructor: req.body.instructor,
         deliveryMode: req.body.deliveryMode,
         credits: req.body.credits,
         campus: req.body.campus,

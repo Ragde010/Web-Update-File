@@ -3,10 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FiLogOut,FiLayout} from 'react-icons/fi';
 import { FaUser, FaEnvelope, FaBookOpen, FaBook} from 'react-icons/fa';
 import '../CSS/Dashstyle.css'
-
 import { useUserAuth } from '../context/UserAuthContext';
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios';
 import UpdateCourse from './ViewCourse';
 import Messages from '../StudentDashboard/Messages'
 import NewAddCourse from './NewAddCourse';
@@ -16,7 +14,7 @@ import NewAddCourse from './NewAddCourse';
 
 function StudentDashboard() {
     const [activeComponent, setActiveComponent] = useState('Dashboard');
-    const {user, logOut} = useUserAuth();
+    const {user, logOut, studentDetails} = useUserAuth();
     const navigate = useNavigate();
 
    
@@ -30,18 +28,7 @@ function StudentDashboard() {
         console.log(error.message);
       }
     }
-    useEffect(() => {
-         axios.get('http://localhost:3001/getsearch-course')
-         .then(response => {
-          console.log(response.data)
-          setAllData(response.data);
-          setFilteredData(response.data);
-
-         })
-         .catch(error => {
-          console.log('Error getting fake data: ' + error);
-    })
-    }, []);
+    
   
   return (
     <div className="container-fluid ">
@@ -49,8 +36,9 @@ function StudentDashboard() {
        <div className="col-3 sidebar">
             <div className="user-profile">
             <FaUser className="user-icon"/>
-               <p className='text-bold'>{user && user.displayName}</p>
-                <p>STUDENT</p>
+               <h4 className='text-white'>{studentDetails?.studentID}</h4>
+               <p className='text-white'>{studentDetails?.displayName}</p>
+                
             </div>
             <ul className="nav-menu">
                <li onClick={() => setActiveComponent('Dashboard')}><FiLayout style={{ fontSize: '24px', marginRight: '10px' }}/>Dashboard</li>
@@ -89,26 +77,10 @@ function StudentDashboard() {
 }
 
 function DashboardComponent() {
- const containerStyle = {
-   position: 'relative',
-   textAlign: 'center',
-   color: 'blue',
- };
- const textOverlayStyle = {
-   position: 'absolute',
-   top: '50%',
-   left: '50%', 
-   transform: 'translate(-50%, -50%)',
- };
  
 return (
- <div style={containerStyle}>
+  <div>
      <img src="src/assets/images/FinalBackground.png" alt=""/>
-     <div style={textOverlayStyle}>
-       {/* Your Dashboard content */}
-       <h1>Welcome to the Course Management Dashboard.</h1>
-       <h2>Easily manage your courses, connect with instructors, and stay organized with your academic journey.</h2>
-     </div>
    </div>
 );
 }

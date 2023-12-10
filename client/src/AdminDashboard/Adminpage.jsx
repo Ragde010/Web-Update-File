@@ -1,11 +1,24 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../CSS/Adminpage.css'
-
+import { useAdminAuth } from '../context/AdminAuthContext';
 
 function Adminpage() {
   const [courses, setCourse] = useState([])
+  const navigate = useNavigate();
+  const { adminUser, logOut, adminDetails } = useAdminAuth();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  console.log(adminUser)
+  const handleLogout = async() => {
+    try {
+      await logOut();
+      navigate('/employee-login');
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   useEffect(()=> {
     axios.get("http://localhost:3001/admin-page")
@@ -21,32 +34,59 @@ function Adminpage() {
     .catch(err => console.log(err))
 
   }
+  // Filter courses based on search query
+  const filteredCourses = courses.filter(course => {
+    const searchString = searchQuery.toLowerCase();
+    return (
+    course.courseName.toLowerCase().includes(searchString) ||
+    course.courseCode.toLowerCase().includes(searchString) ||
+    course.campus.toLowerCase().includes(searchString)
+    
+    );
+});
+  // const username = 'yourUsername';
+  const logoPath = 'src/assets/images/BCR3.png';
   return (
-    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center '>
-      <div className='w-100 h-100 bg-white rounded p-3'>
-        <Link to="/create-course" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> <strong>+</strong> Add Course</Link>
-        <Link to="/viewstudentList" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> Student List</Link>
-          <table className='table'>
+    <div className='d-flex vh-100  justify-content-center align-items-center  '>
+      <div className='w-100 h-100 bg-light  rounded p-3 '>
+      <img src={logoPath} alt="Logo" style={{ position: 'absolute', top: '10px', right: '10px', maxWidth: '200px' }}/>
+        <p style={{ color: 'darkblue', fontWeight: 600, margin: 0 }}>LOGIN User:{adminDetails?.displayName}</p>
+        <p style={{ color: 'darkblue', fontWeight: 600, margin: 0}}>{adminDetails?.adminID}</p>
+        <button className='btn btn-primary' style={{ backgroundColor: 'darkblue' }} onClick={handleLogout}>Logout</button>
+      <h1 className='mt-5 d-flex justify-content-center align-items-center'style={{ color: 'darkblue', fontWeight: 900 }}>ADMIN COURSE MANAGEMENT</h1>
+      
+        <Link to="/create-course" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> Add Course</Link>
+        <Link to="/viewstudentList" className='btn btn-primary btn-with-padding' style={{ backgroundColor: 'darkblue' }}> Students Registered</Link>
+        <input
+          type="text"
+          placeholder="Search courses..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="mb-3 border-primary shawdow-md rounded-2 form-control mt-3 "
+          style={{  paddingRight: '40px'}}
+        />
+        <div className='table-container' style={{ maxHeight: '500px', overflowY: 'auto' }}>
+          <table className='table table-striped '>
             <thead>
               <tr>
-                <th>CourseCode</th>
-                <th>CourseName</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>DropDate</th>
-                <th>WithdrawalDate</th>
-                <th>Instructor</th>
-                <th>Campus</th>
-                <th>Credits</th>
-                <th>DeliveryMode</th>
-                <th>Fees</th>
-                <th>Description</th>
-                <th>Action</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>CourseCode</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>CourseName</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Start</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>End</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>DropDate</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>WithdrawalDate</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Instructor</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Campus</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Credits</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>DeliveryMode</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Fees</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Description</th>
+                <th className='sticky-top' style={{ top: '0', backgroundColor: 'white', zIndex: '1' }}>Action</th>
               </tr>
             </thead> 
             <tbody>
               {
-                courses.map((course) => {
+                filteredCourses.map((course) => {
                   return <tr key= {course._id}>
                     <td className='text-bold'>{course.courseCode}</td>
                     <td>{course.courseName}</td>
@@ -69,6 +109,7 @@ function Adminpage() {
               }
             </tbody>
           </table>
+          </div>
       </div>
     </div>
   )

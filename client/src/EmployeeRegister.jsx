@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Alert } from 'react-bootstrap';
 import './CSS/CssStyles.css'
+import {useAdminAuth} from './context/AdminAuthContext'
+
 
 function EmployeeRegister() {
-    const [name, setName] = useState("")
+    const { signUp } = useAdminAuth();
+    const [displayName, setdisplayName] = useState("")
     const [email, setEmail] = useState("")
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [password, setPassword] = useState("")
@@ -16,9 +18,9 @@ function EmployeeRegister() {
     const navigate = useNavigate();
 
      // Generate a random number for the EmployeeID
-    const [employeeId, setEmployeeId ] = useState('');
+    const [adminID, setadminID ] = useState('');
     useEffect(() => {
-        setEmployeeId('EMP' + Math.floor(Math.random() * 10000));
+      setadminID('ADMIN' + Math.floor(Math.random() * 10000));
     }, []);
 
     // For eyeVisibility of the Password
@@ -27,29 +29,27 @@ function EmployeeRegister() {
         setShowPassword(!showPassword);
       }; 
 
-    const handleSubmit = async(e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        if(password !== confirmPassword){
-          return setError("Passwords do not match!");
+        if (password !== confirmPassword) {
+            return setError("Passwords do not match!");
         }
+  //       // Log the values for debugging
+  // console.log("Email:", email);
+  // console.log("Password:", password);
+  // console.log("DisplayName:", displayName);
+  // console.log("AdminID:", adminID);
         try {
-         const mongoDBResponse = await axios.post('http://localhost:3001/employee-register', {
-          employeeId, 
-          name, 
-          email,
-          dateOfBirth, 
-          password,
-          confirmPassword
-        });
-        console.log("User registered successfully:", mongoDBResponse.data);
-        navigate('/login')
+            await signUp(email, password, displayName, adminID);
+            navigate('/employee-login');
+            // No need to navigate here as the onAuthStateChanged will handle redirection on successful signup
         } catch (error) {
-          setError(error.message)
-          
+            console.error("Registration error:", error);
+            setError(error.message);
         }
-          
-}
+    };
+
   return (
     <div className='offset-lg-3 col-lg-6'>
       <form className='container my-5 p-4'onSubmit={handleSubmit}>
@@ -62,13 +62,13 @@ function EmployeeRegister() {
             <div className='row'>
               <div className='col-lg-6 mb-1'>
                 <div className='form-group mb-2'>
-                  <label htmlFor="employeeId">
-                    <span className='text-bold '>Employee ID</span>
+                  <label htmlFor="adminID">
+                    <span className='text-bold '>Admin ID</span>
                   </label>
                   <input
                       type="text"
-                      name="employeeId"
-                      value={employeeId}
+                      name="adminID"
+                      value={adminID}
                       readOnly
                       className="form-control rounded-1"
                     />
@@ -91,16 +91,16 @@ function EmployeeRegister() {
 
               <div className='col-lg-6 mb-1'>
                 <div className='form-group mb-2'>
-                  <label htmlFor="name">
+                  <label htmlFor="displayName">
                     <span className='text-bold'>Full Name</span>
                   </label>
                   <input
                       type="text"
-                      name="name"
-                      value={name}
+                      name="displayName"
+                      value={displayName}
                       className="form-control rounded-1"
                       placeholder='(e.g., John Doe)'
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => setdisplayName(e.target.value)}
                     />
                 </div>
               </div>

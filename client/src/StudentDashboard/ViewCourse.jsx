@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ViewCourse() {
   const [courseData, setCourseData] = useState([]);
+  const [courseDataForExchange, setcourseDataForExchange] = useState([])
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedCourseDetails, setSelectedCourseDetails] = useState({});
   const navigate = useNavigate();
@@ -65,9 +66,16 @@ function ViewCourse() {
         // Handle success response if needed
         console.log('Course registered successfully:', response.data);
             // Update the local state to remove the registered course
-        const updatedCourseData = courseData.filter(course => course._id !== selectedCourse._id);
-        setCourseData(updatedCourseData);
-        navigate('/exchangecourse')
+            const updatedCourseData = courseData.map((course) =>
+            course._id === selectedCourse._id ? response.data.course : course
+          );
+          setCourseData(updatedCourseData);
+          const updatedCourseDataForExchange = [response.data.updatedCourseData, ...courseDataForExchange];
+          setcourseDataForExchange(updatedCourseDataForExchange);
+          navigate('/exchangecourse')
+
+        // Close the details modal
+        handleCloseDetailsModal();
       })
       .catch(error => {
         // Handle errors if the request fails

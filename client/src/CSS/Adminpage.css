@@ -2,3 +2,11 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.even-row {
+    background-color: #f8f9fa; /* Light gray or your preferred color */
+  }
+  
+  .odd-row {
+    background-color: #ffffff; /* White or your preferred color */
+  }
